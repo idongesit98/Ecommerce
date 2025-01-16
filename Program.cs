@@ -1,11 +1,14 @@
 using System.Text;
 using Ecommerce.Data;
+using Ecommerce.Interfaces;
 using Ecommerce.Models;
+using Ecommerce.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MySqlConnector;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +18,7 @@ builder.Services.AddDbContext<AppDbContext> (options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
     MySqlServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection")));
 });
-
-
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -50,7 +52,8 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-}
+    app.MapScalarApiReference();
+};
 
 app.UseHttpsRedirection();
 

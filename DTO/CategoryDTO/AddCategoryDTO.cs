@@ -7,6 +7,13 @@ namespace Ecommerce.DTO.CategoryDTO
 {
     public class AddCategoryDTO
     {
-        public string Name {get;set;}
+        public string Name {get;set;} = string.Empty;
+        public DateTime CreatedAt{get;set;} = DateTime.UtcNow;
+    }
+
+    public class UpdateCategoryDto
+    {
+        public string Name {get;set;} = string.Empty;
+        public DateTime UpdatedAt{get;set;} = DateTime.UtcNow;
     }
 }

@@ -19,5 +19,7 @@ namespace Ecommerce.Models
         public int? CartId {get;set;}
         public Cart Cart {get;set;}
         public ICollection<Order> Orders {get;set;}
+        public DateTime CreatedAt {get;set;} = DateTime.UtcNow;
+        public DateTime UpdatedAt {get;set;} = DateTime.UtcNow;
     }
 }

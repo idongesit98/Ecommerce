@@ -11,9 +11,10 @@ namespace Ecommerce.Models
     {
         public int Id {get;set;}
         public decimal Amount {get;set;}
-        public DateTime Date {get;set;} = DateTime.UtcNow;
         public AppUser User {get;set;}
         public ICollection<Product> Products {get;set;}
+        public DateTime CreatedAt {get;set;} = DateTime.UtcNow;
+        public DateTime UpdatedAt {get;set;} = DateTime.UtcNow;
         // Payment method
     }
 }
