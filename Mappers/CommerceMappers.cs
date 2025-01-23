@@ -43,7 +43,7 @@ namespace Ecommerce.Mappers
                 Name = categoryModel.Name,
                 ProductCount = categoryModel.Products.Count,
                 CreatedAt = categoryModel.CreatedAt,
-                UpdatedAt = categoryModel.UpdatedAt
+                UpdatedAt = categoryModel.UpdatedAt 
             };
         }
 
@@ -52,7 +52,7 @@ namespace Ecommerce.Mappers
             return new Category
             {
                 Name = create.Name,
-                CreatedAt = create.CreatedAt
+                CreatedAt = create.CreatedAt ?? DateTime.UtcNow
             };
         }
     }

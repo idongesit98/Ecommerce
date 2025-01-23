@@ -24,7 +24,7 @@ namespace Ecommerce.Controllers
             _catRepo = catRepo;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<IActionResult>GetAllCategories()
         {
             if(!ModelState.IsValid)
@@ -51,7 +51,7 @@ namespace Ecommerce.Controllers
                 return Ok(category);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult>CreateCategory([FromBody] AddCategoryDTO addCategory)
         {
             if(!ModelState.IsValid)
@@ -64,7 +64,7 @@ namespace Ecommerce.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        public async Task<IActionResult> UpdateProduct([FromRoute] int id, [FromBody] UpdateCategoryDto update)
+        public async Task<IActionResult> UpdateProduct([FromRoute] int id, [FromBody] UpdateCategoryDto update) // start from here test this route
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -84,9 +84,9 @@ namespace Ecommerce.Controllers
                 return BadRequest(ModelState);
 
                 var deleteProduct = await _catRepo.DeleteCategory(id);
-                if(deleteProduct == null)
-                    return NotFound();
-                return NoContent();
+                if(deleteProduct)
+                    return NotFound(new {message = "Category not found"});
+                return Ok(new {message = "Category deleted successfully"});
         }        
     }
 }

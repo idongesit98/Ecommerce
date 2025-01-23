@@ -20,14 +20,7 @@ namespace Ecommerce.Repository
 
         public async Task<ICollection<Category>> GetCategories()
         {
-            var categories = await _context.Categories.Include(c => c.Products).ToListAsync();
-            var categoryDTO = categories.Select(c => new CategoryDTO
-            {
-                Id = c.Id,
-                Name = c.Name,
-                ProductCount = c.Products.Count 
-            });
-            return(ICollection<Category>)categoryDTO;
+           return await _context.Categories.Include(c => c.Products).ToListAsync();
         }
 
         public async Task<Category> CreateCategory(Category category)
@@ -53,15 +46,15 @@ namespace Ecommerce.Repository
                 return existingCategory;
         }
 
-        public async Task<Category?> DeleteCategory(int id)
+        public async Task<bool> DeleteCategory(int id)
         {
             var deleteCategory = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
             if(deleteCategory == null)
-                return null;
+                return false;
 
                 _context.Categories.Remove(deleteCategory);
                 await _context.SaveChangesAsync();
-                return deleteCategory;
+                return true;
         }
     }
 }

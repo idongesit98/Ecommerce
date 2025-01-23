@@ -3,12 +3,14 @@ using Ecommerce.DTO;
 using Ecommerce.DTO.UpdateDTO;
 using Ecommerce.Interfaces;
 using Ecommerce.Mappers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ecommerce.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/product")]
+[Authorize]
 public class CommerceController : ControllerBase
 {
     private readonly AppDbContext _context;
@@ -44,7 +46,7 @@ public class CommerceController : ControllerBase
             return Ok(product);            
     }
 
-    [HttpPost]
+    [HttpPost("create")]
     public async Task<IActionResult>CreateProduct([FromBody] CreateProductDTO create)
     {
         if (!ModelState.IsValid)
@@ -64,7 +66,7 @@ public class CommerceController : ControllerBase
 
         var updateModel = await _prodRepo.UpdateProduct(id,update);
         if(updateModel == null)
-            return BadRequest(ModelState);
+            return NotFound();
 
             return Ok(updateModel.ToProductDto());  
     }
@@ -78,9 +80,9 @@ public class CommerceController : ControllerBase
 
             var deleteProduct = await _prodRepo.DeleteProduct(id);
             if(deleteProduct == null)
-                return NotFound();
+                return NotFound(new {message = "Product was not found"});
 
-                return NoContent();
+                return Ok(new {message = "Product deleted successfully"});
     }
 
     

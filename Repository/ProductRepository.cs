@@ -22,17 +22,7 @@ namespace Ecommerce.Repository
 
         public async Task<ICollection<Product>> GetProducts()
         {
-            var products = await _context.Products.Include(p => p.Category).ToListAsync();
-            var productDTO = products.Select(p => new ProductDTO
-            {
-                Id = p.Id,
-                Name = p.Name,
-                Price = p.Price,
-                CategoryName = p.Category.Name,
-                CategoryId = p.Category.Id,
-                Description = p.Description
-            }).ToList();
-            return (ICollection<Product>)productDTO;
+            return await _context.Products.Include(p => p.Category).ToListAsync();  
         }
 
         public async Task<Product> GetProductById(int id)

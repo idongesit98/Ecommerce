@@ -14,7 +14,7 @@ namespace Ecommerce.Interfaces
         Task<Category> CreateCategory(Category category);
         Task<Category?> GetCategoryById(int id);
         Task<Category?> UpdateCategory(int id, UpdateCategoryDto update);  
-        Task<Category?> DeleteCategory(int id);
+        Task<bool> DeleteCategory(int id);
 
     }
 }
