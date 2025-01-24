@@ -16,5 +16,6 @@ namespace Ecommerce.Models
         public DateTime CreatedAt {get;set;} = DateTime.UtcNow;
         public DateTime UpdatedAt {get;set;} = DateTime.UtcNow;
         // Payment method
+        public PaymentMethods Method {get;set;}
     }
 }
